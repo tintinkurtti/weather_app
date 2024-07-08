@@ -1,0 +1,25 @@
+.searchbar{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.searchbar input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    height: 40px;
+    width: 200px;
+}
+.searchbar img {
+    height: 40px;
+    cursor: pointer;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+}
+.weather__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
