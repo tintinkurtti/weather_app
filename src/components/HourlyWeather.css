@@ -1,0 +1,19 @@
+.hourlyWeather {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow-x: auto; /* Lägg till detta för horisontell skrollning */
+    width: auto;
+}
+
+.hourlyWeather .hour {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+
+}
