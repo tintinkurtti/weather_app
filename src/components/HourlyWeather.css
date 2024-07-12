@@ -1,0 +1,23 @@
+.hourlyWeather {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    background-color: rgba(204, 204, 204, 0.4);
+    border-radius: 10px;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    margin-bottom: auto;
+    align-items: center;
+    gap: 3vw;
+}
+
+.hourlyWeather .hour {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hourlyWeather .hour img {
+    height: 5vh;
+}
