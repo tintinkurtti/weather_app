@@ -1,32 +1,39 @@
 .weather {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 99vh;
+    width: 100vw;
     background: darkgrey;
+    border: 5px solid black;
 }
 .searchbar{
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 1vh;
+    padding: 1vh;
+    width: 50vw;
 }
 .searchbar input {
-    padding: 8px;
-    border: 1px solid #ccc;
+    padding: 1vh;
+    height: 4vh;
+    width: 15vw;
+    border: 3px solid #ccc;
     border-radius: 7px;
-    height: 40px;
-    width: 200px;
+    font-size: 1vh;
 }
 .searchbar img {
-    height: 40px;
+    height: 4vh;
     cursor: pointer;
     padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 7px;
+    border-radius: 10px;
 }
-.weather__info {
+.searchbar img:hover {
+    background-color: lightslategrey;
+}
+.topbar {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-.weather__info img {
-    height: 100px;
+    height: 70vh;
+    flex-direction: row;
+    gap: 1vh;
+    padding: 1vh;
 }

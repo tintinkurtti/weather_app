@@ -1,6 +1,14 @@
 import React from 'react';
 import './DayWeather.css'; // Stil för den vertikala listan
 
+
+function getDayOfWeek(dateString) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const date = new Date(dateString);
+    const dayOfWeek = date.getDay();
+    return days[dayOfWeek];
+}
+
 const DayWeather = ({ dailyData }) => {
     if (!dailyData) {
         // Optionally, render a loading indicator or return null
@@ -10,8 +18,8 @@ const DayWeather = ({ dailyData }) => {
         <div className="dailyWeather">
             {dailyData.map((day, index) => (
                 <div key={index} className="day">
-                    <h4>{day.date}</h4>
-                    <img src={`http://openweathermap.org/img/w/${day.icon}.png`} alt="" />
+                    <h4>{getDayOfWeek(day.date)}</h4>
+                    <img src={day.icon} alt=""/>
                     <p>{day.temperature}°C</p>
                     <p>{day.description}</p>
                 </div>

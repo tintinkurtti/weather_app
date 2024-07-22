@@ -1,12 +1,10 @@
-dailyweather {
+.dailyWeather {
+  width : 10vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  overflow-y: auto;
   align-items: center;
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 200px;
-  height: 200px;
+}
+.dailyWeather img {
+  height: 5vh;
 }

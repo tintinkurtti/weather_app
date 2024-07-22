@@ -1,0 +1,22 @@
+.weather__info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+.weather__info img {
+    height: 30vh;
+}
+
+.weather__info .humidity_icon {
+    height: 15vh;
+}
+.weather__info .windspeed_icon {
+    height: 15vh;
+}
+.weather__info h1 {
+    font-size: 10vh;
+}
+.weather__info h4 {
+    font-size: 3vh;
+}
