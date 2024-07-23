@@ -13,7 +13,6 @@ const HourlyWeather = ({ dailyData }) => {
                     <h4>{day.date}</h4>
                     <img src={day.icon} alt="" />
                     <p>{day.temperature}°C</p>
-                    <p>{day.description}</p>
                 </div>
             ))}
         </div>
