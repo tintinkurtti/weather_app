@@ -2,21 +2,45 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    width: 70vw;
+    gap: 5vw;
 }
-.weather__info img {
-    height: 30vh;
+.curr_weather {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(204, 204, 204, 0.2);
+    border-radius: 10px;
+    padding: 2vw;
+    width: 30vw;
+    height: 100%;
+}
+.hum_win {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(204, 204, 204, 0.2);
+    border-radius: 10px;
+    padding: 4vw;
+    width: 30vw;
+    gap: 2vh;
 }
 
+.weather__info img {
+    height: 10vw;
+}
 .weather__info .humidity_icon {
-    height: 15vh;
+    height: 3vw;
 }
 .weather__info .windspeed_icon {
-    height: 15vh;
+    height: 3vh;
 }
 .weather__info h1 {
-    font-size: 10vh;
+    font-size: 5vw;
 }
 .weather__info h4 {
-    font-size: 3vh;
+    font-size: 2vw;
 }

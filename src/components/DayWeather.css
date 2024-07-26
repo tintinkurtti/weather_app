@@ -1,10 +1,35 @@
 .dailyWeather {
-  width : 10vw;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    align-items: center;
+    background-color: rgba(204, 204, 204, 0.2);
+    border-radius: 10px;
+
 }
 .dailyWeather img {
-  height: 5vh;
+    height: 5vh;
+}
+
+/* Göm scrollbaren för WebKit-baserade webbläsare */
+.dailyWeather::-webkit-scrollbar, .hourlyWeather::-webkit-scrollbar {
+    display: none;
+}
+
+/* Göm scrollbaren för Firefox */
+.dailyWeather, .hourlyWeather {
+    scrollbar-width: none;
+}
+
+/* Göm scrollbaren för IE och Edge */
+.dailyWeather, .hourlyWeather {
+    -ms-overflow-style: none;
+}
+
+.dailyWeather .day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2vw;
+    width: 25vw;
 }

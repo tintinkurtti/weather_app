@@ -1,39 +1,69 @@
 .weather {
     display: flex;
     flex-direction: column;
-    height: 99vh;
+    height: 100vh;
     width: 100vw;
-    background: darkgrey;
-    border: 5px solid black;
+    color : white;
 }
+
 .searchbar{
     display: flex;
     align-items: center;
-    gap: 1vh;
-    padding: 1vh;
     width: 50vw;
+    margin-left: 4vw;
+    margin-top: 2vh;
+    gap: 10px;
 }
 .searchbar input {
-    padding: 1vh;
-    height: 4vh;
-    width: 15vw;
-    border: 3px solid #ccc;
-    border-radius: 7px;
-    font-size: 1vh;
+    padding: 5px;
+    height: 40px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 20px;
+    border : none;
+
 }
 .searchbar img {
-    height: 4vh;
-    cursor: pointer;
-    padding: 12px;
+    height: 40px;
+    background-color: white;
     border-radius: 10px;
+    padding: 8px;
 }
 .searchbar img:hover {
     background-color: lightslategrey;
 }
 .topbar {
     display: flex;
-    height: 70vh;
+    height: 50vh;
     flex-direction: row;
-    gap: 1vh;
+    gap: 5vw;
+    margin: 4vw;
+}
+.divider {
+    display: flex;
+    flex-direction: column;
     padding: 1vh;
+    margin-left: 4vw;
+}
+
+.error-message {
+    color: #ffffff;
+    margin-top: 10px;
+    background-color: rgba(14, 14, 14, 0.1);
+    padding: 10px;
+    width: 320px;
+    margin-left: 4vw;
+    border-radius: 5px;
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

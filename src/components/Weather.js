@@ -3,8 +3,6 @@ import './Weather.css'
 import DayWeather from './DayWeather';
 import NowWeather from "./NowWeather";
 import search_icon from '../assets/search_icon.png'
-import humidity_icon from '../assets/humidity.png'
-import windspeed_icon from '../assets/windspeed.png'
 import clear_sky from '../assets/clear_sky.png'
 import clear_sky_n from '../assets/clear_sky_n.png'
 import few_clouds from '../assets/few_clouds.png'
@@ -21,6 +19,25 @@ import snow from '../assets/snow.png'
 import snow_n from '../assets/snow_n.png'
 import mist from '../assets/mist.png'
 import mist_n from '../assets/mist_n.png'
+import HourlyWeather from "./HourlyWeather";
+import clear_sky_background from '../assets/backgrounds/clear_sky.jpg'
+import few_clouds_background from '../assets/backgrounds/few_clouds.jpg'
+import scattered_clouds_background from '../assets/backgrounds/scattered_clouds.jpg'
+import broken_clouds_background from '../assets/backgrounds/broken_clouds.jpg'
+import shower_rain_background from '../assets/backgrounds/shower_rain.jpg'
+import rain_background from '../assets/backgrounds/rain.jpg'
+import thunderstorm_background from '../assets/backgrounds/thunderstorm.jpg'
+import snow_background from '../assets/backgrounds/snow.jpg'
+import mist_background from '../assets/backgrounds/mist.jpg'
+import clear_sky_n_background from '../assets/backgrounds/clear_sky_n.jpg'
+import few_clouds_n_background from '../assets/backgrounds/few_clouds_n.jpg'
+import scattered_clouds_n_background from '../assets/backgrounds/scattered_clouds_n.jpg'
+import broken_clouds_n_background from '../assets/backgrounds/broken_clouds_n.jpg'
+import shower_rain_n_background from '../assets/backgrounds/shower_rain_n.jpg'
+import rain_n_background from '../assets/backgrounds/rain_n.jpg'
+import thunderstorm_n_background from '../assets/backgrounds/thunderstorm_n.jpg'
+import snow_n_background from '../assets/backgrounds/snow_n.jpg'
+import mist_n_background from '../assets/backgrounds/mist_n.jpg'
 
 
 const Weather = () => {
@@ -28,6 +45,7 @@ const Weather = () => {
     const inputRef = useRef();
     const [weatherDataNow, setWeatherDataNow] = useState({});
     const [weatherDataForecast, setWeatherDataForecast] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
 
     const Icons = {
         '01d': clear_sky,
@@ -50,6 +68,40 @@ const Weather = () => {
         '50n': mist_n
     }
 
+    // Mappning av ikoner till bakgrundsbilder
+    const backgroundImages = {
+        '01d': clear_sky_background,
+        '02d': few_clouds_background,
+        '03d': scattered_clouds_background,
+        '04d': broken_clouds_background,
+        '09d': shower_rain_background,
+        '10d': rain_background,
+        '11d': thunderstorm_background,
+        '13d': snow_background,
+        '50d': mist_background,
+        '01n': clear_sky_n_background,
+        '02n': few_clouds_n_background,
+        '03n': scattered_clouds_n_background,
+        '04n': broken_clouds_n_background,
+        '09n': shower_rain_n_background,
+        '10n': rain_n_background,
+        '11n': thunderstorm_n_background,
+        '13n': snow_n_background,
+        '50n': mist_n_background,
+        // Lägg till fler mappningar här
+    };
+
+// Funktion för att uppdatera webbplatsens bakgrund
+    function updateBackground(iconCode) {
+        const imageUrl = backgroundImages[iconCode];
+        if (imageUrl) {
+            document.body.style.backgroundImage = `url(${imageUrl})`;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundRepeat = 'no-repeat';
+            document.body.style.backgroundPosition = 'center';
+        }
+    }
+
     const search = async (city) => {
         try {
             const urlNow = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
@@ -60,35 +112,55 @@ const Weather = () => {
 
             const dataNow = await responseNow.json();
             const dataForecast = await responseForecast.json();
-            const icon_now = Icons[dataNow.weather[0].icon];
+            let iconCode = dataNow.weather[0].icon;
+            const currentHour = new Date().getHours();
 
+            if (currentHour >= 21 || currentHour < 5) {
+                iconCode = iconCode.slice(0, -1) + 'n';
+            }
+
+            const icon_now = Icons[iconCode];
+            console.log(iconCode);
+
+            updateBackground(iconCode);
 
             console.log(dataForecast);
             console.log(dataNow);
             setWeatherDataNow({
                 temperature: Math.floor(dataNow.main.temp),
                 location: dataNow.name,
+                country: dataNow.sys.country,
                 icon: icon_now,
                 feels_like: Math.floor(dataNow.main.feels_like),
                 windspeed: dataNow.wind.speed,
                 humidity: dataNow.main.humidity,
+                cloudiness: dataNow.clouds.all,
+                temp_max: Math.floor(dataNow.main.temp_max),
+                temp_min: Math.floor(dataNow.main.temp_min),
                 description: dataNow.weather[0].description,
             });
 
             setWeatherDataForecast({
-                daily: dataForecast.list.filter((day) => day.dt_txt.includes("12:00:00")).map((day) => {
+                daily: dataForecast.list.map((day) => {
+                    let forecastIconCode = day.weather[0].icon;
+                    const forecastHour = new Date(day.dt_txt).getHours();
+
+                    if (forecastHour >= 21 || forecastHour < 5) {
+                        forecastIconCode = forecastIconCode.slice(0, -1) + 'n';
+                    }
+
                     return {
                         temperature: Math.floor(day.main.temp),
-                        icon: Icons[day.weather[0].icon],
+                        icon: Icons[forecastIconCode],
                         description: day.weather[0].description,
                         date: day.dt_txt
                     };
                 })
             });
-
+            setErrorMessage(''); // Clear any previous error message
         } catch (error) {
             console.log(error);
-            alert('City not found. Please try another search.');
+            setErrorMessage('City not found. Please try another search.');
         }
     }
 
@@ -96,22 +168,28 @@ const Weather = () => {
         search('Stockholm');
     }, [])
 
-  return (
-    <div className='weather'>
-        <div className='searchbar'>
-            <input ref={inputRef} type='text' placeholder='Search...'
-                   onKeyPress={(event) => {
-                if (event.key === 'Enter') {
-                    search(inputRef.current.value);
-                }
-            }}/>
-            <img src={search_icon} alt="" onClick={()=>search(inputRef.current.value)}/>
+    return (
+        <div className='weather'>
+            <div className='searchbar'>
+                <input ref={inputRef} type='text' placeholder='Search...'
+                       onKeyPress={(event) => {
+                           if (event.key === 'Enter') {
+                               search(inputRef.current.value);
+                           }
+                       }}/>
+                <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)}/>
+            </div>
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            <div className="topbar">
+                <NowWeather weatherDataNow={weatherDataNow}/>
+                <DayWeather dailyData={weatherDataForecast.daily}/>
+            </div>
+            <div className="divider">
+                <h3>Weather every three hours</h3>
+            </div>
+
+            <HourlyWeather dailyData={weatherDataForecast.daily}/>
         </div>
-        <div className="topbar">
-            <NowWeather weatherDataNow={weatherDataNow} />
-            <DayWeather dailyData={weatherDataForecast.daily} />
-        </div>
-    </div>
-  )
+    )
 }
 export default Weather
