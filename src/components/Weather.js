@@ -1,8 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Weather.css'
 import DayWeather from './DayWeather';
 import NowWeather from "./NowWeather";
-import search_icon from '../assets/search_icon.png'
+import HourlyWeather from "./HourlyWeather";
+import Header from './Header';
+import NowWeatherInfo from "./NowWeatherInfo";
 import clear_sky from '../assets/clear_sky.png'
 import clear_sky_n from '../assets/clear_sky_n.png'
 import few_clouds from '../assets/few_clouds.png'
@@ -19,7 +21,6 @@ import snow from '../assets/snow.png'
 import snow_n from '../assets/snow_n.png'
 import mist from '../assets/mist.png'
 import mist_n from '../assets/mist_n.png'
-import HourlyWeather from "./HourlyWeather";
 import clear_sky_background from '../assets/backgrounds/clear_sky.jpg'
 import few_clouds_background from '../assets/backgrounds/few_clouds.jpg'
 import scattered_clouds_background from '../assets/backgrounds/scattered_clouds.jpg'
@@ -42,7 +43,6 @@ import mist_n_background from '../assets/backgrounds/mist_n.jpg'
 
 const Weather = () => {
     const API_KEY = '3eee5d4598de74a916e6c327678ed871';
-    const inputRef = useRef();
     const [weatherDataNow, setWeatherDataNow] = useState({});
     const [weatherDataForecast, setWeatherDataForecast] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
@@ -88,7 +88,6 @@ const Weather = () => {
         '11n': thunderstorm_n_background,
         '13n': snow_n_background,
         '50n': mist_n_background,
-        // Lägg till fler mappningar här
     };
 
 // Funktion för att uppdatera webbplatsens bakgrund
@@ -170,18 +169,11 @@ const Weather = () => {
 
     return (
         <div className='weather'>
-            <div className='searchbar'>
-                <input ref={inputRef} type='text' placeholder='Search...'
-                       onKeyPress={(event) => {
-                           if (event.key === 'Enter') {
-                               search(inputRef.current.value);
-                           }
-                       }}/>
-                <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)}/>
-            </div>
+            <Header search={search} />
             {errorMessage && <div className="error-message">{errorMessage}</div>}
-            <div className="topbar">
+            <div className="main-content">
                 <NowWeather weatherDataNow={weatherDataNow}/>
+                <NowWeatherInfo weatherDataNow={weatherDataNow}/>
                 <DayWeather dailyData={weatherDataForecast.daily}/>
             </div>
             <div className="divider">
@@ -189,6 +181,7 @@ const Weather = () => {
             </div>
 
             <HourlyWeather dailyData={weatherDataForecast.daily}/>
+
         </div>
     )
 }

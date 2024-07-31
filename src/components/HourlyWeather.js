@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import './HourlyWeather.css';
 
 const formatDate = (dateString) => {
@@ -16,20 +16,55 @@ const formatHour = (dateString) => {
 };
 
 const HourlyWeather = ({ dailyData }) => {
+    const hourlyWeatherRef = useRef(null);
+
+    useLayoutEffect(() => {
+        const handleWheel = (event) => {
+            if (event.deltaY !== 0) {
+                event.preventDefault();
+                const scrollAmount = event.deltaY;
+                const scrollStep = scrollAmount / 20;
+                let currentScroll = 0;
+
+                const smoothScroll = () => {
+                    if (currentScroll < Math.abs(scrollAmount)) {
+                        hourlyWeatherRef.current.scrollLeft += scrollStep;
+                        currentScroll += Math.abs(scrollStep);
+                        window.requestAnimationFrame(smoothScroll);
+                    }
+                };
+
+                window.requestAnimationFrame(smoothScroll);
+            }
+        };
+
+        const hourlyWeatherElement = hourlyWeatherRef.current;
+        if (hourlyWeatherElement) {
+            hourlyWeatherElement.addEventListener('wheel', handleWheel);
+        }
+
+        return () => {
+            if (hourlyWeatherElement) {
+                hourlyWeatherElement.removeEventListener('wheel', handleWheel);
+            }
+        };
+    }, [hourlyWeatherRef]);
+
     if (!dailyData) {
         return <div>Loading...</div>;
     }
+
     return (
-        <div className="hourlyWeather">
+        <ul className="hourlyWeather" ref={hourlyWeatherRef}>
             {dailyData.map((day, index) => (
-                <div key={index} className="hour">
+                <li key={index} className="hour">
                     <h5>{formatDate(day.date)}</h5>
                     <h4>{formatHour(day.date)}</h4>
                     <img src={day.icon} alt="" />
                     <p>{day.temperature}°C</p>
-                </div>
+                </li>
             ))}
-        </div>
+        </ul>
     );
 };
 

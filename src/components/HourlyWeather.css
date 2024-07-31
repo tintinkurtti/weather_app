@@ -2,23 +2,32 @@
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    background-color: rgba(204, 204, 204, 0.2);
+    overflow-y: hidden; /* Förhindrar vertikal skrollning */
+    white-space: nowrap; /* Förhindrar radbrytning inom flex-container */
+    background-color: rgba(39, 39, 39, 0.2);
     border-radius: 10px;
     margin-left: 4vw;
     margin-right: 4vw;
     align-items: center;
     gap: 20px;
+    height: 150px; /* Justera höjden efter behov */
+    -ms-overflow-style: none; /* Göm scrollbaren för IE och Edge */
+    scrollbar-width: none; /* Göm scrollbaren för Firefox */
+    padding: 0; /* Remove default padding */
+}
 
-
+.hourlyWeather::-webkit-scrollbar {
+    display: none; /* Göm scrollbaren för WebKit-baserade webbläsare */
 }
 
 .hourlyWeather .hour {
-    display: flex;
+    display: inline-flex; /* Använd inline-flex för att hålla elementen på en rad */
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 1vh;
-    min-width: 7vh;
+    min-width: 7vh; /* Justera vid behov */
+    flex-shrink: 0; /* Förhindra att element krymper */
 }
 
 .hourlyWeather .hour img {
