@@ -2,34 +2,39 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    width: 30vw;
     align-items: center;
-    background-color: rgba(204, 204, 204, 0.4);
+    background-color: rgba(39, 39, 39, 0.4);
     border-radius: 10px;
-
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 .dailyWeather img {
     height: 5vh;
 }
 
 /* Göm scrollbaren för WebKit-baserade webbläsare */
-.dailyWeather::-webkit-scrollbar, .hourlyWeather::-webkit-scrollbar {
+.dailyWeather::-webkit-scrollbar{
     display: none;
-}
-
-/* Göm scrollbaren för Firefox */
-.dailyWeather, .hourlyWeather {
-    scrollbar-width: none;
-}
-
-/* Göm scrollbaren för IE och Edge */
-.dailyWeather, .hourlyWeather {
-    -ms-overflow-style: none;
 }
 
 .dailyWeather .day {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 50%;
     padding: 2vw;
-    width: 25vw;
+    border-bottom: grey solid 1px;
+}
+.dailyWeather h4 {
+    font-weight: lighter;
+}
+
+@media (max-width: 878px) {
+    .dailyWeather {
+        flex-direction: column;
+        width: 43.5vw;
+        height: 50%;
+    }
+
 }
