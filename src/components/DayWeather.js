@@ -11,7 +11,6 @@ function getDayOfWeek(dateString) {
 
 const DayWeather = ({ dailyData }) => {
     if (!dailyData) {
-        // Optionally, render a loading indicator or return null
         return <div>Loading...</div>;
     }
 

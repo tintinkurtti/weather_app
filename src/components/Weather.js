@@ -1,16 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Weather.css'
 import DayWeather from './DayWeather';
 import NowWeather from "./NowWeather";
-import search_icon from '../assets/search_icon.png'
+import HourlyWeather from "./HourlyWeather";
+import Header from './Header';
+import NowWeatherInfo from "./NowWeatherInfo";
 import clear_sky from '../assets/clear_sky.png'
 import clear_sky_n from '../assets/clear_sky_n.png'
 import few_clouds from '../assets/few_clouds.png'
 import few_clouds_n from '../assets/few_clouds_n.png'
 import scattered_clouds from '../assets/scattered_clouds.png'
-import scattered_clouds_n from '../assets/scattered_clouds_n.png'
+//import scattered_clouds_n from '../assets/scattered_clouds_n.png'
 import shower_rain from '../assets/shower_rain.png'
-import shower_rain_n from '../assets/shower_rain_n.png'
+//import shower_rain_n from '../assets/shower_rain_n.png'
 import rain from '../assets/rain.png'
 import rain_n from '../assets/rain_n.png'
 import thunderstorm from '../assets/thunderstorm.png'
@@ -19,7 +21,6 @@ import snow from '../assets/snow.png'
 import snow_n from '../assets/snow_n.png'
 import mist from '../assets/mist.png'
 import mist_n from '../assets/mist_n.png'
-import HourlyWeather from "./HourlyWeather";
 import clear_sky_background from '../assets/backgrounds/clear_sky.jpg'
 import few_clouds_background from '../assets/backgrounds/few_clouds.jpg'
 import scattered_clouds_background from '../assets/backgrounds/scattered_clouds.jpg'
@@ -42,9 +43,9 @@ import mist_n_background from '../assets/backgrounds/mist_n.jpg'
 
 const Weather = () => {
     const API_KEY = '3eee5d4598de74a916e6c327678ed871';
-    const inputRef = useRef();
     const [weatherDataNow, setWeatherDataNow] = useState({});
     const [weatherDataForecast, setWeatherDataForecast] = useState({});
+    const [errorMessage, setErrorMessage] = useState('');
 
     const Icons = {
         '01d': clear_sky,
@@ -58,9 +59,9 @@ const Weather = () => {
         '50d': mist,
         '01n': clear_sky_n,
         '02n': few_clouds_n,
-        '03n': scattered_clouds_n,
-        '04n': scattered_clouds_n,
-        '09n': shower_rain_n,
+        '03n': scattered_clouds,
+        '04n': scattered_clouds,
+        '09n': shower_rain,
         '10n': rain_n,
         '11n': thunderstorm_n,
         '13n': snow_n,
@@ -87,7 +88,6 @@ const Weather = () => {
         '11n': thunderstorm_n_background,
         '13n': snow_n_background,
         '50n': mist_n_background,
-        // Lägg till fler mappningar här
     };
 
 // Funktion för att uppdatera webbplatsens bakgrund
@@ -111,37 +111,56 @@ const Weather = () => {
 
             const dataNow = await responseNow.json();
             const dataForecast = await responseForecast.json();
-            const icon_now = Icons[dataNow.weather[0].icon];
-            console.log(dataNow.weather[0].icon);
+            let iconCode = dataNow.weather[0].icon;
+            const currentHour = new Date().getHours();
 
-            updateBackground(dataNow.weather[0].icon);
+            if (currentHour >= 21 || currentHour < 5) {
+                iconCode = iconCode.slice(0, -1) + 'n';
+            }
+
+            const icon_now = Icons[iconCode];
+            console.log(iconCode);
+
+            updateBackground(iconCode);
 
             console.log(dataForecast);
             console.log(dataNow);
             setWeatherDataNow({
                 temperature: Math.floor(dataNow.main.temp),
                 location: dataNow.name,
+                country: dataNow.sys.country,
                 icon: icon_now,
                 feels_like: Math.floor(dataNow.main.feels_like),
                 windspeed: dataNow.wind.speed,
+                wind_direction: dataNow.wind.deg,
                 humidity: dataNow.main.humidity,
+                cloudiness: dataNow.clouds.all,
+                temp_max: Math.floor(dataNow.main.temp_max),
+                temp_min: Math.floor(dataNow.main.temp_min),
                 description: dataNow.weather[0].description,
             });
 
             setWeatherDataForecast({
                 daily: dataForecast.list.map((day) => {
+                    let forecastIconCode = day.weather[0].icon;
+                    const forecastHour = new Date(day.dt_txt).getHours();
+
+                    if (forecastHour >= 21 || forecastHour < 5) {
+                        forecastIconCode = forecastIconCode.slice(0, -1) + 'n';
+                    }
+
                     return {
                         temperature: Math.floor(day.main.temp),
-                        icon: Icons[day.weather[0].icon],
+                        icon: Icons[forecastIconCode],
                         description: day.weather[0].description,
                         date: day.dt_txt
                     };
                 })
             });
-
+            setErrorMessage(''); // Clear any previous error message
         } catch (error) {
             console.log(error);
-            alert('City not found. Please try another search.');
+            setErrorMessage('City not found. Please try another search.');
         }
     }
 
@@ -151,20 +170,19 @@ const Weather = () => {
 
     return (
         <div className='weather'>
-            <div className='searchbar'>
-                <input ref={inputRef} type='text' placeholder='Search...'
-                       onKeyPress={(event) => {
-                           if (event.key === 'Enter') {
-                               search(inputRef.current.value);
-                           }
-                       }}/>
-                <img src={search_icon} alt="" onClick={() => search(inputRef.current.value)}/>
-            </div>
-            <div className="topbar">
+            <Header search={search} />
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
+            <div className="main-content">
                 <NowWeather weatherDataNow={weatherDataNow}/>
+                <NowWeatherInfo weatherDataNow={weatherDataNow}/>
                 <DayWeather dailyData={weatherDataForecast.daily}/>
             </div>
+            <div className="divider">
+                <h3>Weather every three hours</h3>
+            </div>
+
             <HourlyWeather dailyData={weatherDataForecast.daily}/>
+
         </div>
     )
 }
