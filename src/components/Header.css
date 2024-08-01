@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     margin-left: 4vw;
-    margin-top: 2vh;
+    margin-top: 4vh;
     margin-right: 4vw;
     gap: 1rem;
     align-items: center;
@@ -76,13 +76,19 @@
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 70px;
-        left: 0;
+        top: 10vh;
         right: 0;
-        background-color: rgba(53, 53, 53, 0.6);
-        padding: 1rem;
-        border-radius: 5px;
+        background-color: rgb(94, 94, 94);
+        gap: 0;
+        margin-right: 4vw;
+        border: 1px solid grey;
+    }
 
+    .quick-links button {
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0);
+        border-radius: 0;
+        border-bottom: 1px solid grey;
     }
 
     .quick-links.show {

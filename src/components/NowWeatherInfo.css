@@ -1,31 +1,87 @@
-.hum_win {
+.info {
     display: flex;
     height: 100%;
     flex-direction: column;
     justify-content: center;
     background-color: rgba(39, 39, 39, 0.4);
     border-radius: 10px;
-    padding: 4vw;
     width: 30vw;
-    gap: 2vh;
+}
+.info .cloud_hum{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: auto;
 }
 
-.hum_win img {
-    height: 1rem;
+.info .windspeed_dir{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: auto;
 }
-.hum_win h4 {
+
+.info img {
+    height: 5rem;
+}
+
+.info .wind_dir {
+    height: 4vh;
+}
+
+
+.info h4 {
+    display: flex;
     font-size: 1.5rem;
     font-weight: lighter;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+.info .humidity_icon {
+    height: 3.5rem;
+
+}
+.info .temp_icon {
+    height: 3rem;
 }
 
 @media (max-width: 878px) {
-    .hum_win {
+    .info {
         flex-direction: column;
         width: 43.5vw;
         height: 50%;
     }
 
-    .hum_win h4 {
+    .info h4 {
         font-size: 1rem;
+    }
+    .info img {
+        height: 3rem;
+    }
+    .info .humidity_icon {
+        height: 2.5rem;
+    }
+
+    .info .cloud_hum{
+        display: flex;
+        flex-direction: column;
+        gap : 1vh;
+        align-items: center;
+        width: 100%;
+        margin: 0.5vh
+    }
+
+    .info .windspeed_dir{
+        display: flex;
+        flex-direction: column;
+        margin: 0.5vh;
+        gap : 1vh;
+        align-items: center;
+        width: 100%;
     }
 }

@@ -10,9 +10,9 @@ import clear_sky_n from '../assets/clear_sky_n.png'
 import few_clouds from '../assets/few_clouds.png'
 import few_clouds_n from '../assets/few_clouds_n.png'
 import scattered_clouds from '../assets/scattered_clouds.png'
-import scattered_clouds_n from '../assets/scattered_clouds_n.png'
+//import scattered_clouds_n from '../assets/scattered_clouds_n.png'
 import shower_rain from '../assets/shower_rain.png'
-import shower_rain_n from '../assets/shower_rain_n.png'
+//import shower_rain_n from '../assets/shower_rain_n.png'
 import rain from '../assets/rain.png'
 import rain_n from '../assets/rain_n.png'
 import thunderstorm from '../assets/thunderstorm.png'
@@ -59,9 +59,9 @@ const Weather = () => {
         '50d': mist,
         '01n': clear_sky_n,
         '02n': few_clouds_n,
-        '03n': scattered_clouds_n,
-        '04n': scattered_clouds_n,
-        '09n': shower_rain_n,
+        '03n': scattered_clouds,
+        '04n': scattered_clouds,
+        '09n': shower_rain,
         '10n': rain_n,
         '11n': thunderstorm_n,
         '13n': snow_n,
@@ -132,6 +132,7 @@ const Weather = () => {
                 icon: icon_now,
                 feels_like: Math.floor(dataNow.main.feels_like),
                 windspeed: dataNow.wind.speed,
+                wind_direction: dataNow.wind.deg,
                 humidity: dataNow.main.humidity,
                 cloudiness: dataNow.clouds.all,
                 temp_max: Math.floor(dataNow.main.temp_max),

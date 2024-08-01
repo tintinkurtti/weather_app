@@ -22,7 +22,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 50%;
     padding: 2vw;
+    border-bottom: grey solid 1px;
 }
 .dailyWeather h4 {
     font-weight: lighter;

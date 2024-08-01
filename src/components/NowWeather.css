@@ -8,6 +8,21 @@
     padding: 2vw;
     width: 30vw;
     height: 100%;
+
+}
+
+.curr_weather img {
+    height: 12vh;
+    animation: zoomInOut 4s infinite;
+}
+
+@keyframes zoomInOut {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 @media (max-width: 878px) {
