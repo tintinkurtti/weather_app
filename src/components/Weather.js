@@ -44,6 +44,7 @@ const Weather = () => {
     const [weatherDataNow, setWeatherDataNow] = useState({});
     const [weatherDataForecast, setWeatherDataForecast] = useState({});
     const [errorMessage, setErrorMessage] = useState('');
+    const [defaultCity] = useState('Stockholm');
 
     const Icons = {
         '01d': clear_sky,
@@ -161,8 +162,9 @@ const Weather = () => {
         }
     }
 
+
     useEffect(() => {
-        search('Stockholm');
+        search(defaultCity);
     }, [])
 
     return (
