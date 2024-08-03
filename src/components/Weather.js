@@ -117,7 +117,6 @@ const Weather = () => {
             }
 
             const icon_now = Icons[iconCode];
-            console.log(iconCode);
 
             updateBackground(iconCode);
 
