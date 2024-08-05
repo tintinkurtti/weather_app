@@ -26,7 +26,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1.5rem;
     border-right: grey solid 1px; /* Lägg till en grå högerkant */
     min-width: 8vh; /* Justera vid behov */
     flex-shrink: 0; /* Förhindra att element krymper */
