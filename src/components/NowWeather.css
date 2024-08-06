@@ -29,11 +29,19 @@
     .curr_weather {
         flex-direction: column;
         width: 100%;
-        height: 50%;
+        height: 45%;
     }
-
+    .curr_weather p{
+        font-size: 0.75rem;
+    }
+    .curr_weather h1{
+        font-size: 1.5rem;
+    }
+    .curr_weather h3{
+        font-size: 1rem;
+    }
     .curr_weather img {
-        height: 10vh;
+        height: 8vh;
 
     }
 }

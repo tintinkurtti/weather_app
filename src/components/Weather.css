@@ -42,11 +42,11 @@
 
 @media (max-width: 878px) {
     body {
-        background-size: cover;
+        background-size: auto 10%;
     }
     .main-content {
         flex-direction: row;
-        height: 55vh;
+        height: 50vh;
         flex-wrap: wrap;
         margin-top: 2vh;
     }

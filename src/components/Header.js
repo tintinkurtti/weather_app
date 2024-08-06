@@ -12,6 +12,11 @@ const Header = ({ search }) => {
         setShowLinks(prevShowLinks => !prevShowLinks);
     };
 
+    const handleCityClick = (city) => {
+        search(city);
+        setShowLinks(false); // Stänger quick-links listan
+    };
+
     return (
         <header className="header">
             <div className="searchbar">
@@ -28,7 +33,7 @@ const Header = ({ search }) => {
             </button>
             <div className={`quick-links ${showLinks ? 'show' : ''}`}>
                 {quickLinks.map((city) => (
-                    <button key={city} onClick={() => search(city)}>
+                    <button key={city} onClick={() => handleCityClick(city)}>
                         <h2>{city}</h2>
                     </button>
                 ))}

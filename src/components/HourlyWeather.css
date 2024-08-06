@@ -10,7 +10,7 @@
     margin-right: 4vw;
     margin-bottom: 4vw;
     align-items: center;
-    min-height: 200px; /* Justera höjden efter behov */
+    min-height: 150px; /* Justera höjden efter behov */
     -ms-overflow-style: none; /* Göm scrollbaren för IE och Edge */
     scrollbar-width: none; /* Göm scrollbaren för Firefox */
     padding: 0; /* Remove default padding */
@@ -27,7 +27,7 @@
     justify-content: center;
     padding: 2rem;
     border-right: grey solid 1px; /* Lägg till en grå högerkant */
-    min-height: 3vh;
+    min-height: 2.5vh;
     min-width: 8vw; /* Justera vid behov */
     flex-shrink: 0; /* Förhindra att element krymper */
 }
