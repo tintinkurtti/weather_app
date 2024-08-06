@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: row;
     margin-left: 4vw;
-    margin-top: 4vw;
+    margin-top: 4vh;
     margin-right: 4vw;
     gap: 1rem;
     align-items: center;
@@ -72,6 +72,10 @@
 }
 
 @media (max-width: 878px) {
+    .header {
+        margin-top: 2vh;
+    }
+
     .quick-links {
         display: none;
         flex-direction: column;

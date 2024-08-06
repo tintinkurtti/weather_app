@@ -100,6 +100,11 @@ const Weather = () => {
         }
     }
 
+    const convertToLocalTime = (utcTime, timezoneOffset) => {
+        const localTime = new Date((utcTime + timezoneOffset) * 1000);
+        return localTime.toLocaleString(); // Returnerar lokal tid som en sträng
+    };
+
     const search = async (city) => {
         try {
             const urlNow = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
@@ -136,22 +141,19 @@ const Weather = () => {
                 temp_max: Math.floor(dataNow.main.temp_max),
                 temp_min: Math.floor(dataNow.main.temp_min),
                 description: dataNow.weather[0].description,
+                timezone: dataNow.sys.timezone,
             });
 
+            const timezoneOffset = dataForecast.city.timezone;
             setWeatherDataForecast({
+
                 daily: dataForecast.list.map((day) => {
-                    let forecastIconCode = day.weather[0].icon;
-                    const forecastHour = new Date(day.dt_txt).getHours();
-
-                    if (forecastHour >= 21 || forecastHour < 5) {
-                        forecastIconCode = forecastIconCode.slice(0, -1) + 'n';
-                    }
-
+                    const localTime = convertToLocalTime(day.dt, timezoneOffset);
                     return {
                         temperature: Math.floor(day.main.temp),
-                        icon: Icons[forecastIconCode],
+                        icon: Icons[day.weather[0].icon],
                         description: day.weather[0].description,
-                        date: day.dt_txt
+                        date: localTime,
                     };
                 })
             });

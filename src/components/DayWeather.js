@@ -14,7 +14,7 @@ const DayWeather = ({ dailyData }) => {
         return <div>Loading...</div>;
     }
 
-    const filteredData = dailyData.filter((day) => day.date.includes("12:00:00"));
+    const filteredData = dailyData.filter((day) => day.date.includes("12:00:00") || day.date.includes("13:00:00") || day.date.includes("14:00:00"));
 
     return (
         <div className="dailyWeather">

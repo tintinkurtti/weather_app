@@ -10,7 +10,7 @@
     height: 50vh;
     flex-direction: row;
     gap: 5vw;
-    margin: 4vw;
+    margin: 4vh 4vw;
 }
 .divider {
     display: flex;
@@ -48,5 +48,6 @@
         flex-direction: row;
         height: 55vh;
         flex-wrap: wrap;
+        margin-top: 2vh;
     }
 }

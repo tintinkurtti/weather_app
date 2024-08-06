@@ -6,7 +6,7 @@ const Header = ({ search }) => {
     const inputRef = useRef();
     const [showLinks, setShowLinks] = useState(false);
 
-    const quickLinks = ['Stockholm', 'New York', 'Berlin', 'Hong Kong'];
+    const quickLinks = ['Stockholm', 'New York', 'Paris', 'Tokyo'];
 
     const toggleLinks = () => {
         setShowLinks(prevShowLinks => !prevShowLinks);

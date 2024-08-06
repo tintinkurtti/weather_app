@@ -10,8 +10,7 @@
     margin-right: 4vw;
     margin-bottom: 4vw;
     align-items: center;
-
-    height: 250px; /* Justera höjden efter behov */
+    min-height: 200px; /* Justera höjden efter behov */
     -ms-overflow-style: none; /* Göm scrollbaren för IE och Edge */
     scrollbar-width: none; /* Göm scrollbaren för Firefox */
     padding: 0; /* Remove default padding */
@@ -26,12 +25,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 2rem;
     border-right: grey solid 1px; /* Lägg till en grå högerkant */
-    min-width: 8vh; /* Justera vid behov */
+    min-height: 3vh;
+    min-width: 8vw; /* Justera vid behov */
     flex-shrink: 0; /* Förhindra att element krymper */
 }
 
 .hourlyWeather .hour img {
     height: 5vh;
+}
+
+@media (max-width: 878px) {
+    .hourlyWeather{
+        min-height: 100px;
+    }
 }
