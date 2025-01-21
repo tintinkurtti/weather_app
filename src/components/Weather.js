@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import './Weather.css'
 import DayWeather from './DayWeather';
 import NowWeather from "./NowWeather";
@@ -89,7 +89,6 @@ const Weather = () => {
         '50n': mist_n_background,
     };
 
-// Funktion för att uppdatera webbplatsens bakgrund
     function updateBackground(iconCode) {
         const imageUrl = backgroundImages[iconCode];
         if (imageUrl) {
@@ -100,10 +99,15 @@ const Weather = () => {
             document.body.style.backgroundPosition = 'center';
         }
     }
-
     const convertToLocalTime = (utcTime, timezoneOffset) => {
         const localTime = new Date((utcTime + timezoneOffset) * 1000);
-        return localTime.toLocaleString(); // Returnerar lokal tid som en sträng
+        return localTime.toLocaleString();
+    };
+
+    const fetchWeatherData = async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
     };
 
     const search = async (city) => {
@@ -111,11 +115,7 @@ const Weather = () => {
             const urlNow = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`;
             const urlForecast = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`;
 
-            const responseNow = await fetch(urlNow);
-            const responseForecast = await fetch(urlForecast);
-
-            const dataNow = await responseNow.json();
-            const dataForecast = await responseForecast.json();
+            const [dataNow, dataForecast] = await Promise.all([fetchWeatherData(urlNow), fetchWeatherData(urlForecast)]);
             let iconCode = dataNow.weather[0].icon;
             const currentHour = new Date().getHours();
 
@@ -124,11 +124,8 @@ const Weather = () => {
             }
 
             const icon_now = Icons[iconCode];
-
             updateBackground(iconCode);
 
-            console.log(dataForecast);
-            console.log(dataNow);
             setWeatherDataNow({
                 temperature: Math.floor(dataNow.main.temp),
                 location: dataNow.name,
@@ -147,45 +144,39 @@ const Weather = () => {
 
             const timezoneOffset = dataForecast.city.timezone;
             setWeatherDataForecast({
-
-                daily: dataForecast.list.map((day) => {
-                    const localTime = convertToLocalTime(day.dt, timezoneOffset);
-                    return {
-                        temperature: Math.floor(day.main.temp),
-                        icon: Icons[day.weather[0].icon],
-                        description: day.weather[0].description,
-                        date: localTime,
-                    };
-                })
+                daily: dataForecast.list.map((day) => ({
+                    temperature: Math.floor(day.main.temp),
+                    icon: Icons[day.weather[0].icon],
+                    description: day.weather[0].description,
+                    date: convertToLocalTime(day.dt, timezoneOffset),
+                }))
             });
-            setErrorMessage(''); // Clear any previous error message
+            setErrorMessage('');
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setErrorMessage('City not found. Please try another search.');
         }
-    }
-
+    };
 
     useEffect(() => {
         search(defaultCity);
-    }, [])
+    }, []);
 
     return (
         <div className='weather'>
             <Header search={search} />
             {errorMessage && <div className="error-message">{errorMessage}</div>}
             <div className="main-content">
-                <NowWeather weatherDataNow={weatherDataNow}/>
-                <NowWeatherInfo weatherDataNow={weatherDataNow}/>
-                <DayWeather dailyData={weatherDataForecast.daily}/>
+                <NowWeather weatherDataNow={weatherDataNow} />
+                <NowWeatherInfo weatherDataNow={weatherDataNow} />
+                <DayWeather dailyData={weatherDataForecast.daily} />
             </div>
             <div className="divider">
                 <h3>Weather every three hours</h3>
             </div>
-
-            <HourlyWeather dailyData={weatherDataForecast.daily}/>
-
+            <HourlyWeather dailyData={weatherDataForecast.daily} />
         </div>
-    )
-}
-export default Weather
+    );
+};
+
+export default Weather;
